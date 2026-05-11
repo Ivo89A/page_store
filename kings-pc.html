@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KINGS PC — Technological Sovereignty Secured</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg0: #06060e;
+      --bg1: #0a0a18;
+      --bg2: #0f0f20;
+      --bg3: #141428;
+      --card: #111120;
+      --card2: #161630;
+      --acc: #7c3aed;
+      --acc-mid: #8b5cf6;
+      --acc-light: #a78bfa;
+      --acc-pale: #c4b5fd;
+      --acc-glow: rgba(124,58,237,.22);
+      --txt: #f0f0f8;
+      --txt2: #8888a8;
+      --txt3: #44445a;
+      --bdr: rgba(110,70,240,.13);
+      --bdr-mid: rgba(110,70,240,.28);
+      --bdr-hi: rgba(110,70,240,.55);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:'Space Grotesk',-apple-system,sans-serif;background:var(--bg0);color:var(--txt);min-height:100vh;overflow-x:hidden}
+
+    /* ── NAV ── */
+    .nav{
+      position:fixed;top:0;left:0;right:0;z-index:100;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:0 2rem;height:62px;
+      background:rgba(6,6,14,.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+      border-bottom:1px solid var(--bdr);
+    }
+    .nav-logo{font-size:.85rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:color .2s}
+    .nav-logo:hover{color:var(--acc-light)}
+    .nav-links{display:flex;gap:2.4rem;list-style:none}
+    .nav-links a{text-decoration:none;color:var(--txt2);font-size:.88rem;font-weight:500;letter-spacing:.03em;cursor:pointer;transition:color .2s;padding-bottom:2px;border-bottom:1px solid transparent}
+    .nav-links a:hover,.nav-links a.active{color:var(--txt)}
+    .nav-links a.active{border-bottom-color:var(--acc-mid)}
+    .nav-actions{display:flex;align-items:center;gap:.75rem}
+    .nav-icon{background:none;border:none;color:var(--txt2);cursor:pointer;padding:.45rem;border-radius:6px;transition:color .2s,background .2s;display:flex;align-items:center;justify-content:center;position:relative}
+    .nav-icon:hover{color:var(--txt);background:var(--bg3)}
+    .cart-badge{position:absolute;top:-4px;right:-4px;background:var(--acc);color:#fff;font-size:.58rem;font-weight:700;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;pointer-events:none}
+    .hamburger{display:none;background:none;border:none;cursor:pointer;padding:4px;flex-direction:column;gap:5px}
+    .hamburger span{display:block;width:22px;height:2px;background:var(--txt2);border-radius:2px;transition:all .3s}
+
+    /* ── VIEWS ── */
+    .view{display:none}.view.active{display:block}
+
+    /* ── HERO ── */
+    .hero{
+      min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+      padding:8rem 2rem 5rem;position:relative;overflow:hidden;
+    }
+    .hero::before{content:'';position:absolute;top:-180px;left:-180px;width:580px;height:580px;background:radial-gradient(circle,rgba(124,58,237,.14) 0%,transparent 70%);pointer-events:none}
+    .hero::after{content:'';position:absolute;bottom:-120px;right:-100px;width:420px;height:420px;background:radial-gradient(circle,rgba(91,33,182,.09) 0%,transparent 70%);pointer-events:none}
+    .hero-inner{max-width:1200px;margin:0 auto;width:100%}
+    .hero-tag{font-size:.68rem;letter-spacing:.28em;text-transform:uppercase;color:var(--acc-light);margin-bottom:1.6rem;font-weight:500}
+    .hero-title{font-size:clamp(3.2rem,9vw,7.5rem);font-weight:700;line-height:.95;margin-bottom:1.6rem;letter-spacing:-.03em}
+    .hero-title .acc{color:var(--acc-light)}
+    .hero-desc{font-size:.97rem;color:var(--txt2);line-height:1.75;max-width:460px;margin-bottom:2.6rem}
+    .hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
+    .btn-fill{
+      background:var(--acc);color:#fff;border:none;padding:.82rem 2rem;
+      font-family:inherit;font-size:.78rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+      cursor:pointer;transition:background .2s,transform .15s;
+      clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,0 100%);
+    }
+    .btn-fill:hover{background:var(--acc-mid);transform:translateY(-1px)}
+    .btn-ghost{
+      background:transparent;color:var(--txt2);padding:.82rem 2rem;
+      border:1px solid var(--bdr-mid);font-family:inherit;font-size:.78rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+      cursor:pointer;transition:all .2s;
+      clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px);
+    }
+    .btn-ghost:hover{color:var(--txt);border-color:var(--bdr-hi);transform:translateY(-1px)}
+    .hero-indicator{display:flex;align-items:center;gap:1rem;margin-top:3.5rem}
+    .ind-bar{height:1px;width:130px;background:var(--bdr-mid);position:relative;overflow:hidden}
+    .ind-bar::after{content:'';position:absolute;left:0;top:0;height:100%;width:55%;background:var(--acc-mid);animation:indSlide 3s ease-in-out infinite}
+    @keyframes indSlide{0%{transform:translateX(-100%)}50%{transform:translateX(100%)}100%{transform:translateX(220%)}}
+    .ind-label{font-size:.62rem;letter-spacing:.22em;color:var(--txt3);text-transform:uppercase}
+
+    /* ── SECTORS ── */
+    .sectors{padding:5rem 2rem;max-width:1200px;margin:0 auto}
+    .sec-hdr{margin-bottom:2.5rem}
+    .sec-hdr h2{font-size:clamp(1.8rem,4vw,2.9rem);font-weight:700;letter-spacing:-.01em;display:flex;align-items:center;gap:1rem}
+    .sec-hdr h2::before{content:'';display:block;width:4px;height:1.6em;background:var(--acc);border-radius:2px;flex-shrink:0}
+    .sec-sub{font-size:.64rem;letter-spacing:.22em;text-transform:uppercase;color:var(--txt3);margin-top:.45rem;margin-left:1.4rem}
+    .sectors-grid{display:grid;grid-template-columns:1.4fr 1fr;grid-template-rows:260px 260px;gap:1rem}
+    .sector-card{
+      position:relative;border-radius:3px;overflow:hidden;cursor:pointer;
+      border:1px solid var(--bdr);transition:border-color .3s,transform .3s;background:var(--card);
+    }
+    .sector-card:hover{border-color:var(--bdr-mid);transform:scale(1.015)}
+    .sector-card.large{grid-row:1/3}
+    .sector-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.35;transition:opacity .3s,transform .4s}
+    .sector-card:hover .sector-bg{opacity:.55;transform:scale(1.06)}
+    .sector-grid-lines{
+      position:absolute;inset:0;opacity:.06;
+      background-image:linear-gradient(var(--acc-light) 1px,transparent 1px),linear-gradient(90deg,var(--acc-light) 1px,transparent 1px);
+      background-size:42px 42px;
+    }
+    .sector-label{position:absolute;bottom:1.4rem;left:1.4rem;right:1.4rem}
+    .sector-icon-row{font-size:.62rem;letter-spacing:.16em;color:var(--acc-light);text-transform:uppercase;margin-bottom:.45rem;display:flex;align-items:center;gap:.5rem}
+    .sector-name{font-size:1.25rem;font-weight:700;color:var(--txt)}
+    .sector-desc{font-size:.78rem;color:var(--txt2);margin-top:.28rem}
+    .sector-cta{font-size:.65rem;letter-spacing:.15em;color:var(--txt3);text-transform:uppercase;margin-top:.4rem}
+    .sector-glow{position:absolute;inset:0;background:radial-gradient(circle at 30% 70%,rgba(124,58,237,.12) 0%,transparent 60%);pointer-events:none}
+    /* backgrounds per sector */
+    .bg-custom{background:linear-gradient(145deg,#1a0a40 0%,#07051a 100%)}
+    .bg-gpu{background:linear-gradient(145deg,#1e053a 0%,#080720 100%)}
+    .bg-cpu{background:linear-gradient(145deg,#051428 0%,#080820 100%)}
+    .bg-periph{background:linear-gradient(90deg,#050a1e 0%,#100528 50%,#050a1e 100%)}
+
+    /* ── FEATURED SYSTEMS ── */
+    .featured{padding:4rem 2rem 5rem;max-width:1200px;margin:0 auto}
+    .sys-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem;margin-top:2.5rem}
+    .sys-card{
+      background:var(--card);border:1px solid var(--bdr);border-radius:3px;
+      overflow:hidden;cursor:pointer;transition:all .3s;
+    }
+    .sys-card:hover{border-color:var(--bdr-mid);transform:translateY(-4px);box-shadow:0 16px 50px rgba(124,58,237,.14)}
+    .sys-img{width:100%;aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+    .sys-info{padding:1.4rem}
+    .sys-tier{font-size:.6rem;letter-spacing:.2em;color:var(--acc-light);text-transform:uppercase;margin-bottom:.7rem}
+    .sys-name{font-size:1.2rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.9rem}
+    .sys-specs{display:flex;flex-direction:column;gap:.28rem;margin-bottom:1.2rem}
+    .sys-spec-row{font-size:.8rem;color:var(--txt2)}
+    .sys-spec-row strong{color:var(--txt3);font-weight:500;margin-right:.45rem}
+    .sys-foot{display:flex;align-items:center;justify-content:space-between}
+    .sys-price{font-size:1.35rem;font-weight:700}
+
+    /* ── COMPONENTS PAGE ── */
+    .page-top{padding:6.5rem 2rem 1.8rem;border-bottom:1px solid var(--bdr);background:var(--bg1)}
+    .page-top h1{font-size:clamp(1.4rem,3vw,2rem);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+    .comp-layout{display:grid;grid-template-columns:230px 1fr;gap:2rem;max-width:1200px;margin:0 auto;padding:2rem}
+    .filters{position:sticky;top:75px;height:fit-content}
+    .filter-group{margin-bottom:1.8rem}
+    .filter-lbl{font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--txt3);margin-bottom:.9rem;border-bottom:1px solid var(--bdr);padding-bottom:.45rem}
+    .filter-opt{display:flex;align-items:center;gap:.7rem;margin-bottom:.55rem;cursor:pointer}
+    .filter-opt input[type=checkbox]{
+      appearance:none;-webkit-appearance:none;width:15px;height:15px;
+      border:1px solid var(--bdr-mid);background:var(--bg2);border-radius:3px;cursor:pointer;
+      position:relative;flex-shrink:0;transition:background .2s,border-color .2s;
+    }
+    .filter-opt input[type=checkbox]:checked{background:var(--acc);border-color:var(--acc)}
+    .filter-opt input[type=checkbox]:checked::after{
+      content:'';position:absolute;left:4px;top:1px;width:5px;height:9px;
+      border:2px solid #fff;border-top:none;border-left:none;transform:rotate(45deg);
+    }
+    .filter-opt label{font-size:.84rem;color:var(--txt2);cursor:pointer;transition:color .2s}
+    .filter-opt:hover label{color:var(--txt)}
+    .price-btns{display:flex;gap:.5rem;flex-wrap:wrap}
+    .price-btn{
+      background:var(--bg3);border:1px solid var(--bdr-mid);color:var(--txt2);
+      padding:.38rem .85rem;font-family:inherit;font-size:.76rem;font-weight:500;
+      cursor:pointer;transition:all .2s;border-radius:2px;
+    }
+    .price-btn:hover,.price-btn.on{background:var(--acc);border-color:var(--acc);color:#fff}
+    .prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:1rem}
+    .prod-card{
+      background:var(--card);border:1px solid var(--bdr);border-radius:3px;
+      overflow:hidden;cursor:pointer;transition:border-color .3s,transform .2s,box-shadow .3s;
+    }
+    .prod-card:hover{border-color:var(--bdr-mid);transform:translateY(-3px);box-shadow:0 12px 40px rgba(124,58,237,.12)}
+    .prod-img{width:100%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+    .prod-stat{
+      display:flex;justify-content:space-between;padding:.45rem .9rem;
+      background:rgba(0,0,0,.28);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);
+    }
+    .stat-lbl{font-size:.63rem;letter-spacing:.1em;color:var(--txt3);text-transform:uppercase}
+    .stat-val{font-size:.63rem;letter-spacing:.06em;color:var(--acc-light);font-weight:600}
+    .prod-info{padding:.9rem}
+    .prod-brand{font-size:.62rem;letter-spacing:.16em;color:var(--txt3);text-transform:uppercase;margin-bottom:.45rem}
+    .prod-name{font-size:.98rem;font-weight:700;line-height:1.3;margin-bottom:.45rem;color:var(--txt)}
+    .prod-desc{font-size:.78rem;color:var(--txt2);line-height:1.5;margin-bottom:.9rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .prod-foot{display:flex;align-items:center;justify-content:space-between;gap:.6rem}
+    .prod-price{font-size:1.15rem;font-weight:700}
+    .btn-add{
+      background:var(--acc);color:#fff;border:none;padding:.52rem 1.1rem;
+      font-family:inherit;font-size:.72rem;font-weight:600;letter-spacing:.1em;cursor:pointer;
+      text-transform:uppercase;transition:background .2s;display:flex;align-items:center;gap:.35rem;white-space:nowrap;
+    }
+    .btn-add:hover{background:var(--acc-mid)}
+
+    /* ── PRODUCT DETAIL ── */
+    .detail-view{padding:7rem 2rem 4rem;max-width:1200px;margin:0 auto}
+    .back-btn{
+      background:none;border:none;color:var(--txt2);cursor:pointer;font-family:inherit;
+      font-size:.8rem;letter-spacing:.05em;display:flex;align-items:center;gap:.5rem;
+      margin-bottom:2.2rem;transition:color .2s;padding:0;
+    }
+    .back-btn:hover{color:var(--txt)}
+    .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+    .detail-img{
+      background:var(--card);border:1px solid var(--bdr);border-radius:3px;
+      aspect-ratio:1;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;
+    }
+    .detail-img::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(124,58,237,.09) 0%,transparent 70%)}
+    .detail-brand{font-size:.68rem;letter-spacing:.2em;color:var(--txt3);text-transform:uppercase;margin-bottom:.9rem}
+    .detail-name{font-size:clamp(2rem,4vw,3.5rem);font-weight:700;line-height:1.05;letter-spacing:-.02em;margin-bottom:1.4rem}
+    .detail-desc{font-size:.95rem;color:var(--txt2);line-height:1.75;margin-bottom:2rem}
+    .detail-price{font-size:2.6rem;font-weight:700;margin-bottom:2rem}
+    .detail-actions{display:flex;gap:.9rem;margin-bottom:2.5rem}
+    .btn-add-lg{
+      flex:1;background:var(--acc-mid);color:#fff;border:none;padding:1rem 2rem;
+      font-family:inherit;font-size:.82rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+      cursor:pointer;transition:background .2s;
+    }
+    .btn-add-lg:hover{background:var(--acc)}
+    .btn-wish{
+      background:transparent;border:1px solid var(--bdr-mid);color:var(--txt2);
+      padding:1rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;
+    }
+    .btn-wish:hover{border-color:var(--acc-mid);color:var(--acc-light)}
+    .specs-grid{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
+    .spec-item{background:var(--bg2);border:1px solid var(--bdr);padding:.9rem;border-radius:3px}
+    .spec-lbl{font-size:.62rem;letter-spacing:.2em;color:var(--txt3);text-transform:uppercase;margin-bottom:.4rem}
+    .spec-val{font-size:.9rem;font-weight:600;color:var(--txt)}
+
+    /* ── CART ── */
+    .cart-view{padding:7rem 2rem 4rem;max-width:1200px;margin:0 auto}
+    .cart-ttl{font-size:clamp(2rem,5vw,4.2rem);font-weight:800;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.4rem}
+    .cart-sub{font-size:.62rem;letter-spacing:.26em;color:var(--txt3);text-transform:uppercase;margin-bottom:3rem}
+    .cart-layout{display:grid;grid-template-columns:1fr 330px;gap:2rem;align-items:start}
+    .cart-items{display:flex;flex-direction:column;gap:.9rem}
+    .cart-item{
+      background:var(--card);border:1px solid var(--bdr);border-radius:3px;padding:1.4rem;
+      display:grid;grid-template-columns:76px 1fr auto;gap:1.2rem;align-items:start;
+    }
+    .ci-img{
+      width:76px;height:76px;background:var(--bg3);border:1px solid var(--bdr);border-radius:3px;
+      display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;
+    }
+    .ci-type{font-size:.58rem;letter-spacing:.2em;color:var(--txt3);text-transform:uppercase;margin-bottom:.35rem}
+    .ci-name{font-size:.96rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.45rem}
+    .ci-spec{font-size:.76rem;color:var(--txt2);line-height:1.65}
+    .ci-spec strong{color:var(--txt3);font-weight:500;margin-right:.4rem}
+    .ci-right{display:flex;flex-direction:column;align-items:flex-end;gap:.7rem}
+    .ci-rm{background:none;border:none;color:var(--txt3);cursor:pointer;font-size:1.1rem;transition:color .2s;padding:0;line-height:1}
+    .ci-rm:hover{color:#f87171}
+    .ci-price{font-size:1.1rem;font-weight:700;color:var(--acc-light)}
+    .ci-qty{display:flex;align-items:center;gap:.7rem}
+    .qty-btn{
+      background:var(--bg3);border:1px solid var(--bdr-mid);color:var(--txt);
+      width:26px;height:26px;display:flex;align-items:center;justify-content:center;
+      cursor:pointer;font-size:.95rem;transition:all .2s;border-radius:2px;
+    }
+    .qty-btn:hover{border-color:var(--acc-mid);color:var(--acc-light)}
+    .qty-n{font-size:.9rem;font-weight:600;min-width:20px;text-align:center}
+    .order-sum{
+      background:var(--card);border:1px solid var(--bdr);border-radius:3px;padding:1.4rem;
+      position:sticky;top:78px;
+    }
+    .order-sum h3{font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--txt3);margin-bottom:1.4rem;padding-bottom:.7rem;border-bottom:1px solid var(--bdr)}
+    .o-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:.7rem;font-size:.88rem}
+    .o-row .ol{color:var(--txt2)}.o-row .ov{color:var(--txt);font-weight:500}.o-row .om{color:var(--txt3);font-size:.8rem}
+    .o-total{display:flex;justify-content:space-between;align-items:center;margin:1.4rem 0;padding-top:.9rem;border-top:1px solid var(--bdr)}
+    .o-total .ol{font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--txt3)}
+    .o-total .oa{font-size:1.85rem;font-weight:700}
+    .btn-checkout{
+      width:100%;background:var(--acc-mid);color:#fff;border:none;padding:.95rem;
+      font-family:inherit;font-size:.78rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+      cursor:pointer;transition:background .2s;display:flex;align-items:center;justify-content:center;gap:.5rem;
+    }
+    .btn-checkout:hover{background:var(--acc)}
+    .secure-row{display:flex;align-items:center;justify-content:center;gap:.4rem;margin-top:.7rem;font-size:.68rem;color:var(--txt3);letter-spacing:.1em}
+    .empty-cart{text-align:center;padding:4rem 2rem;color:var(--txt3)}
+    .empty-cart-icon{font-size:2.8rem;margin-bottom:.9rem;opacity:.45}
+    .empty-cart h3{font-size:1rem;font-weight:600;margin-bottom:.45rem;color:var(--txt2)}
+
+    /* ── FOOTER ── */
+    footer{background:var(--bg1);border-top:1px solid var(--bdr);padding:2.5rem 2rem}
+    .footer-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+    .f-logo{font-size:.82rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase}
+    .f-links{display:flex;gap:2rem;list-style:none}
+    .f-links a{text-decoration:none;font-size:.78rem;color:var(--txt3);transition:color .2s;cursor:pointer}
+    .f-links a:hover{color:var(--txt2)}
+    .f-copy{font-size:.7rem;color:var(--txt3);letter-spacing:.05em;width:100%;margin-top:1.4rem;padding-top:1.4rem;border-top:1px solid var(--bdr)}
+
+    /* ── TOAST ── */
+    .toast{
+      position:fixed;bottom:2rem;right:2rem;background:var(--card);border:1px solid var(--bdr-hi);
+      padding:.9rem 1.4rem;border-radius:3px;font-size:.83rem;color:var(--txt);z-index:200;
+      transform:translateY(80px);opacity:0;transition:all .3s ease;display:flex;align-items:center;gap:.7rem;
+      box-shadow:0 8px 30px rgba(0,0,0,.4);
+    }
+    .toast.show{transform:translateY(0);opacity:1}
+    .toast-dot{width:7px;height:7px;border-radius:50%;background:var(--acc-light);flex-shrink:0}
+
+    /* ── MOBILE NAV ── */
+    .mob-nav{
+      display:none;position:fixed;inset:0;z-index:99;background:rgba(6,6,14,.97);
+      flex-direction:column;align-items:center;justify-content:center;gap:2rem;
+    }
+    .mob-nav.open{display:flex}
+    .mob-nav a{font-size:1.5rem;font-weight:700;color:var(--txt2);text-decoration:none;letter-spacing:.05em;cursor:pointer;transition:color .2s}
+    .mob-nav a:hover{color:var(--txt)}
+    .mob-close{position:absolute;top:1.4rem;right:1.4rem;background:none;border:none;color:var(--txt2);font-size:1.5rem;cursor:pointer}
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:900px){
+      .nav-links{display:none}.hamburger{display:flex}
+      .sectors-grid{grid-template-columns:1fr;grid-template-rows:auto}
+      .sector-card.large{grid-row:auto;height:280px}.sector-card{height:190px}
+      .comp-layout{grid-template-columns:1fr}.filters{position:static}
+      .prod-grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+      .detail-grid{grid-template-columns:1fr;gap:2rem}
+      .cart-layout{grid-template-columns:1fr}.order-sum{position:static}
+    }
+    @media(max-width:600px){
+      .nav{padding:0 1rem}.hero{padding:7rem 1.2rem 3rem}
+      .sectors{padding:3rem 1.2rem}.featured{padding:3rem 1.2rem}
+      .cart-item{grid-template-columns:60px 1fr}
+      .ci-right{grid-column:1/-1;flex-direction:row;justify-content:space-between;align-items:center}
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAVIGATION ── -->
+<nav class="nav">
+  <div class="nav-logo" onclick="goView('home')">KINGS PC</div>
+  <ul class="nav-links">
+    <li><a onclick="goView('home')" id="nl-systems">Systems</a></li>
+    <li><a onclick="goView('components')" id="nl-components">Components</a></li>
+    <li><a onclick="goView('home')" id="nl-periph">Peripherals</a></li>
+    <li><a onclick="goView('home')" id="nl-support">Support</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="nav-icon" onclick="goView('home')" title="Search">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </button>
+    <button class="nav-icon" onclick="goView('cart')" title="Cart">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+      <span class="cart-badge" id="cart-badge">0</span>
+    </button>
+    <button class="nav-icon" title="Account">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    </button>
+    <button class="hamburger" id="ham-btn" onclick="toggleMobNav()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ── MOBILE NAV ── -->
+<div class="mob-nav" id="mob-nav">
+  <button class="mob-close" onclick="toggleMobNav()">✕</button>
+  <a onclick="goView('home');toggleMobNav()">Systems</a>
+  <a onclick="goView('components');toggleMobNav()">Components</a>
+  <a onclick="toggleMobNav()">Peripherals</a>
+  <a onclick="toggleMobNav()">Support</a>
+</div>
+
+<!-- ══════════════════════════════ HOME VIEW ══════════════════════════════ -->
+<section class="view active" id="v-home">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-inner">
+      <p class="hero-tag">Technological Sovereignty Secured</p>
+      <h1 class="hero-title">Build Your<br><span class="acc">Throne</span></h1>
+      <p class="hero-desc">Elite performance systems engineered for uncompromising power. Ascend to the highest tier of computing with meticulously crafted, custom-loop cooled behemoths.</p>
+      <div class="hero-btns">
+        <button class="btn-fill" onclick="goView('components')">Configure Now</button>
+        <button class="btn-ghost" onclick="scrollToSystems()">View Pre-Builts</button>
+      </div>
+      <div class="hero-indicator">
+        <div class="ind-bar"></div>
+        <span class="ind-label">Sys_Load</span>
+        <div class="ind-bar" style="width:60px;margin-left:.5rem"></div>
+        <span class="ind-label">Optimal</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- HARDWARE SECTORS -->
+  <div class="sectors">
+    <div class="sec-hdr">
+      <h2>Hardware Sectors</h2>
+      <p class="sec-sub">Select Your Vector</p>
+    </div>
+    <div class="sectors-grid">
+
+      <!-- Large: Custom Systems -->
+      <div class="sector-card large" onclick="goView('home');scrollToSystems()">
+        <div class="sector-bg bg-custom"></div>
+        <div class="sector-grid-lines"></div>
+        <div class="sector-glow"></div>
+        <!-- SVG tower illustration -->
+        <svg style="position:absolute;right:12%;top:50%;transform:translateY(-50%);width:38%;opacity:.35" viewBox="0 0 120 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="25" y="10" width="70" height="180" rx="5" fill="#8b5cf6" opacity=".12" stroke="#8b5cf6" stroke-width="1.2"/>
+          <rect x="35" y="25" width="50" height="30" rx="3" fill="#7c3aed" opacity=".25"/>
+          <circle cx="60" cy="100" r="22" fill="none" stroke="#a78bfa" stroke-width="1.2"/>
+          <circle cx="60" cy="100" r="14" fill="none" stroke="#8b5cf6" stroke-width="1"/>
+          <rect x="35" y="140" width="50" height="8" rx="2" fill="#5b21b6" opacity=".4"/>
+          <rect x="35" y="155" width="50" height="8" rx="2" fill="#5b21b6" opacity=".3"/>
+          <rect x="35" y="170" width="22" height="6" rx="1" fill="#a78bfa" opacity=".5"/>
+        </svg>
+        <div class="sector-label">
+          <div class="sector-name">Custom Systems</div>
+          <div class="sector-desc">Full-tower mastery. Liquid dominance.</div>
+        </div>
+      </div>
+
+      <!-- Graphics Processing -->
+      <div class="sector-card" onclick="goView('components')">
+        <div class="sector-bg bg-gpu"></div>
+        <div class="sector-grid-lines"></div>
+        <div class="sector-glow"></div>
+        <svg style="position:absolute;right:10%;top:50%;transform:translateY(-50%);width:45%;opacity:.3" viewBox="0 0 160 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="5" y="20" width="150" height="45" rx="4" fill="#8b5cf6" opacity=".15" stroke="#8b5cf6" stroke-width="1.2"/>
+          <circle cx="55" cy="42" r="16" fill="none" stroke="#a78bfa" stroke-width="1.4"/>
+          <circle cx="55" cy="42" r="9" fill="none" stroke="#7c3aed" stroke-width="1"/>
+          <circle cx="105" cy="42" r="16" fill="none" stroke="#a78bfa" stroke-width="1.4"/>
+          <circle cx="105" cy="42" r="9" fill="none" stroke="#7c3aed" stroke-width="1"/>
+          <rect x="5" y="60" width="12" height="8" rx="1" fill="#5b21b6" opacity=".5"/>
+          <rect x="5" y="22" width="150" height="3" rx="1" fill="#a78bfa" opacity=".6"/>
+        </svg>
+        <div class="sector-label">
+          <div class="sector-icon-row">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="6" width="20" height="12" rx="2"/></svg>
+            Graphics Processing
+          </div>
+        </div>
+      </div>
+
+      <!-- Compute Units -->
+      <div class="sector-card" onclick="goView('components')">
+        <div class="sector-bg bg-cpu"></div>
+        <div class="sector-grid-lines"></div>
+        <div class="sector-glow"></div>
+        <svg style="position:absolute;right:10%;top:50%;transform:translateY(-50%);width:45%;opacity:.3" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="18" y="18" width="44" height="44" rx="3" fill="#7c3aed" opacity=".15" stroke="#8b5cf6" stroke-width="1.2"/>
+          <rect x="26" y="26" width="28" height="28" rx="2" fill="#5b21b6" opacity=".3"/>
+          <line x1="18" y1="30" x2="10" y2="30" stroke="#8b5cf6" stroke-width="1.2"/>
+          <line x1="18" y1="40" x2="10" y2="40" stroke="#8b5cf6" stroke-width="1.2"/>
+          <line x1="18" y1="50" x2="10" y2="50" stroke="#8b5cf6" stroke-width="1.2"/>
+          <line x1="62" y1="30" x2="70" y2="30" stroke="#8b5cf6" stroke-width="1.2"/>
+          <line x1="62" y1="40" x2="70" y2="40" stroke="#8b5cf6" stroke-width="1.2"/>
+          <line x1="62" y1="50" x2="70" y2="50" stroke="#8b5cf6" stroke-width="1.2"/>
+          <line x1="30" y1="18" x2="30" y2="10" stroke="#8b5cf6" stroke-width="1.2"/>
+          <line x1="40" y1="18" x2="40" y2="10" stroke="#8b5cf6" stroke-width="1.2"/>
+          <line x1="50" y1="18" x2="50" y2="10" stroke="#8b5cf6" stroke-width="1.2"/>
+        </svg>
+        <div class="sector-label">
+          <div class="sector-icon-row">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>
+            Compute Units
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Peripherals full-width card -->
+    <div class="sector-card" style="margin-top:1rem;height:130px;" onclick="goView('home')">
+      <div class="sector-bg bg-periph"></div>
+      <div class="sector-grid-lines"></div>
+      <div class="sector-glow"></div>
+      <div class="sector-label" style="bottom:1.2rem">
+        <div class="sector-name" style="font-size:1.4rem">Tactical Peripherals</div>
+        <div class="sector-cta">Explore Gear →</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURED SYSTEMS -->
+  <div class="featured" id="featured-systems">
+    <div class="sec-hdr">
+      <h2>Pre-Built Systems</h2>
+      <p class="sec-sub">Deploy Immediately</p>
+    </div>
+    <div class="sys-grid" id="sys-grid"></div>
+  </div>
+
+</section>
+
+<!-- ══════════════════════════════ COMPONENTS VIEW ══════════════════════════════ -->
+<section class="view" id="v-components">
+  <div class="page-top">
+    <h1>Components</h1>
+  </div>
+  <div class="comp-layout">
+    <!-- Filters -->
+    <aside class="filters">
+      <div class="filter-group">
+        <div class="filter-lbl">Category</div>
+        <label class="filter-opt"><input type="checkbox" checked data-filter="cat" value="gpu"><label>Graphics Cards (GPU)</label></label>
+        <label class="filter-opt"><input type="checkbox" data-filter="cat" value="cpu"><label>Processors (CPU)</label></label>
+        <label class="filter-opt"><input type="checkbox" data-filter="cat" value="mb"><label>Motherboards</label></label>
+        <label class="filter-opt"><input type="checkbox" data-filter="cat" value="ram"><label>Memory (RAM)</label></label>
+        <label class="filter-opt"><input type="checkbox" data-filter="cat" value="storage"><label>Storage (NVMe)</label></label>
+        <label class="filter-opt"><input type="checkbox" data-filter="cat" value="cooling"><label>Cooling</label></label>
+      </div>
+      <div class="filter-group">
+        <div class="filter-lbl">Brand</div>
+        <label class="filter-opt"><input type="checkbox" checked data-filter="brand" value="nvidia"><label>NVIDIA</label></label>
+        <label class="filter-opt"><input type="checkbox" checked data-filter="brand" value="amd"><label>AMD</label></label>
+        <label class="filter-opt"><input type="checkbox" data-filter="brand" value="intel"><label>Intel</label></label>
+        <label class="filter-opt"><input type="checkbox" data-filter="brand" value="corsair"><label>Corsair</label></label>
+        <label class="filter-opt"><input type="checkbox" data-filter="brand" value="noctua"><label>Noctua</label></label>
+      </div>
+      <div class="filter-group">
+        <div class="filter-lbl">Price Range</div>
+        <div class="price-btns">
+          <button class="price-btn" onclick="setPriceFilter('under500',this)">Under $500</button>
+          <button class="price-btn on" onclick="setPriceFilter('500plus',this)">$500+</button>
+          <button class="price-btn on" onclick="setPriceFilter('3000plus',this)">$3000+</button>
+        </div>
+      </div>
+    </aside>
+    <!-- Products -->
+    <div class="prod-grid" id="prod-grid"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════ PRODUCT DETAIL VIEW ══════════════════════════════ -->
+<section class="view" id="v-detail">
+  <div class="detail-view" id="detail-inner"></div>
+</section>
+
+<!-- ══════════════════════════════ CART VIEW ══════════════════════════════ -->
+<section class="view" id="v-cart">
+  <div class="cart-view">
+    <h1 class="cart-ttl">Active Requisition</h1>
+    <p class="cart-sub">Verify specifications before initialization</p>
+    <div class="cart-layout">
+      <div class="cart-items" id="cart-items"></div>
+      <div class="order-sum">
+        <h3>Order Summary</h3>
+        <div class="o-row"><span class="ol" id="cart-item-count">Subtotal (0 items)</span><span class="ov" id="cart-subtotal">$0.00</span></div>
+        <div class="o-row"><span class="ol">Secure Shipping</span><span class="om">Calculated next</span></div>
+        <div class="o-row"><span class="ol">Estimated Tax</span><span class="om">—</span></div>
+        <div class="o-total">
+          <span class="ol">Total Due</span>
+          <span class="oa" id="cart-total">$0.00</span>
+        </div>
+        <button class="btn-checkout" onclick="showToast('Redirecting to secure checkout...')">
+          Initialize Checkout →
+        </button>
+        <div class="secure-row">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Encrypted Transaction
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+    <div class="f-logo">Kings PC</div>
+    <ul class="f-links">
+      <li><a>Tech Support</a></li>
+      <li><a>RMA Portal</a></li>
+      <li><a>Overclocking Guide</a></li>
+      <li><a>Privacy</a></li>
+      <li><a>Terms</a></li>
+    </ul>
+    <p class="f-copy">© 2024 KINGS PC. TECHNOLOGICAL SOVEREIGNTY SECURED.</p>
+  </div>
+</footer>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <div class="toast-dot"></div>
+  <span id="toast-msg"></span>
+</div>
+
+<script>
+/* ── DATA ── */
+const PRODUCTS = [
+  {
+    id:1, brand:'NVIDIA', type:'GPU', name:'RTX 4090 SUPRIM LIQUID X',
+    desc:'Elite-tier performance featuring closed-loop liquid cooling and a full custom PCB with unlocked power limits.',
+    price:1999.00, statLabel:'CUDA Cores', statVal:'16384',
+    cat:'gpu', brandKey:'nvidia',
+    specs:{VRAM:'24GB GDDR6X', Boost:'2.61 GHz', TDP:'450W', Interface:'PCIe 4.0 x16'}
+  },
+  {
+    id:2, brand:'INTEL', type:'CPU', name:'Core i9-14900KS',
+    desc:'Special Edition unlocked desktop processor. Pushing the absolute boundaries of frequency and multi-thread performance.',
+    price:689.00, statLabel:'Boost Clock', statVal:'6.2 GHz',
+    cat:'cpu', brandKey:'intel',
+    specs:{Cores:'24 (8P+16E)', Socket:'LGA1700', TDP:'253W', Cache:'36MB L3'}
+  },
+  {
+    id:3, brand:'CORSAIR', type:'RAM', name:'Dominator Titanium 64GB DDR5',
+    desc:'Precision-forged aluminum cooling meets unprecedented DDR5 speeds for extreme overclocking headroom.',
+    price:349.99, statLabel:'Transfer Rate', statVal:'8000 MT/s',
+    cat:'ram', brandKey:'corsair',
+    specs:{Capacity:'64GB (2x32)', Speed:'DDR5-8000', Latency:'CL38', Voltage:'1.45V'}
+  },
+  {
+    id:4, brand:'NOCTUA', type:'Cooling', name:'NH-D15 chromax.black',
+    desc:'The legendary flagship air cooler, now in stealth black. Near-silent operation for demanding workloads.',
+    price:119.95, statLabel:'TDP Rating', statVal:'300W+',
+    cat:'cooling', brandKey:'noctua',
+    specs:{Height:'165mm', Fans:'2x NF-A15', Noise:'19.2 dB(A)', Socket:'LGA1700/AM5'}
+  },
+  {
+    id:5, brand:'AMD', type:'GPU', name:'RX 7900 XTX Nitro+',
+    desc:'Sapphire-engineered flagship RDNA3 powerhouse with triple-fan Tri-X cooling for sustained peak performance.',
+    price:879.00, statLabel:'Stream Proc.', statVal:'6144',
+    cat:'gpu', brandKey:'amd',
+    specs:{VRAM:'24GB GDDR6', Boost:'2.5 GHz', TDP:'355W', Interface:'PCIe 4.0 x16'}
+  },
+  {
+    id:6, brand:'CORSAIR', type:'RAM', name:'Vengeance 32GB DDR5',
+    desc:'Optimized for Intel and AMD platforms. Aggressive overclocking profiles with XMP 3.0 support built-in.',
+    price:129.99, statLabel:'Transfer Rate', statVal:'6400 MT/s',
+    cat:'ram', brandKey:'corsair',
+    specs:{Capacity:'32GB (2x16)', Speed:'DDR5-6400', Latency:'CL36', Voltage:'1.35V'}
+  },
+];
+
+const SYSTEMS = [
+  {
+    id:10, tier:'Flagship System', name:'SOVEREIGN MK.IV',
+    price:4899.00,
+    cpu:'Intel Core i9-14900K', gpu:'NVIDIA RTX 4090 24GB', ram:'64GB DDR5-6400', storage:'4TB NVMe Gen4',
+    desc:'The apex of custom-loop liquid cooled tower builds. Reserved for those who accept nothing but absolute dominance.',
+    specs:{Processor:'Intel Core i9-14900K', Graphics:'NVIDIA RTX 4090', Memory:'64GB DDR5-6400', Storage:'4TB NVMe Gen4'}
+  },
+  {
+    id:11, tier:'Performance System', name:"KING'S CORE i9 EDITION",
+    price:4299.00,
+    cpu:'Intel Core i9-14900K', gpu:'NVIDIA RTX 4090', ram:'64GB DDR5-6000', storage:'4TB NVMe Gen4',
+    desc:"Engineered for absolute dominance. The King's Core i9 Edition delivers unparalleled processing power and thermal efficiency for elite creators and professional gamers.",
+    specs:{Processor:'Intel Core i9-14900K', Graphics:'NVIDIA RTX 4090', Memory:'64GB DDR5-6000', Storage:'4TB NVMe Gen4'}
+  },
+  {
+    id:12, tier:'Mid-Range Titan', name:'AEGIS RTX 4080 SUPER',
+    price:3199.00,
+    cpu:'Intel Core i7-14700K', gpu:'NVIDIA RTX 4080 Super 16GB', ram:'32GB DDR5-5600', storage:'2TB NVMe Gen4',
+    desc:'Precision-built for competitive gaming and content creation. Maximum frame rates without compromise.',
+    specs:{Processor:'Intel Core i7-14700K', Graphics:'NVIDIA RTX 4080 Super', Memory:'32GB DDR5-5600', Storage:'2TB NVMe Gen4'}
+  },
+];
+
+/* ── CART STATE ── */
+let cart = [];
+let currentView = 'home';
+
+/* ── VIEW ROUTING ── */
+function goView(name) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  const el = document.getElementById('v-' + name);
+  if (el) el.classList.add('active');
+  currentView = name;
+
+  // update nav active
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  if (name === 'home') document.getElementById('nl-systems').classList.add('active');
+  if (name === 'components') document.getElementById('nl-components').classList.add('active');
+
+  if (name === 'components') renderProducts();
+  if (name === 'cart') renderCart();
+
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function scrollToSystems() {
+  const el = document.getElementById('featured-systems');
+  if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+/* ── SVG PRODUCT IMAGES ── */
+function gpuSVG(color='#8b5cf6') {
+  return `<svg width="120" height="120" viewBox="0 0 160 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="5" y="22" width="150" height="55" rx="5" fill="${color}" fill-opacity=".1" stroke="${color}" stroke-width="1.5"/>
+    <circle cx="55" cy="49" r="17" fill="none" stroke="${color}" stroke-width="1.4" stroke-opacity=".7"/>
+    <circle cx="55" cy="49" r="10" fill="none" stroke="${color}" stroke-width="1" stroke-opacity=".5"/>
+    <circle cx="55" cy="49" r="4" fill="${color}" fill-opacity=".4"/>
+    <circle cx="105" cy="49" r="17" fill="none" stroke="${color}" stroke-width="1.4" stroke-opacity=".7"/>
+    <circle cx="105" cy="49" r="10" fill="none" stroke="${color}" stroke-width="1" stroke-opacity=".5"/>
+    <circle cx="105" cy="49" r="4" fill="${color}" fill-opacity=".4"/>
+    <rect x="5" y="23" width="150" height="3" rx="1" fill="${color}" fill-opacity=".8"/>
+    <rect x="5" y="72" width="14" height="9" rx="1" fill="${color}" fill-opacity=".3"/>
+  </svg>`;
+}
+function cpuSVG(color='#7c3aed') {
+  return `<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="22" y="22" width="56" height="56" rx="4" fill="${color}" fill-opacity=".12" stroke="${color}" stroke-width="1.5"/>
+    <rect x="32" y="32" width="36" height="36" rx="2" fill="${color}" fill-opacity=".25"/>
+    ${[28,40,52,64].map(y=>`<line x1="22" y1="${y}" x2="12" y2="${y}" stroke="${color}" stroke-width="1.5" stroke-opacity=".7"/>
+    <line x1="78" y1="${y}" x2="88" y2="${y}" stroke="${color}" stroke-width="1.5" stroke-opacity=".7"/>`).join('')}
+    ${[28,40,52,64].map(x=>`<line x1="${x}" y1="22" x2="${x}" y2="12" stroke="${color}" stroke-width="1.5" stroke-opacity=".7"/>
+    <line x1="${x}" y1="78" x2="${x}" y2="88" stroke="${color}" stroke-width="1.5" stroke-opacity=".7"/>`).join('')}
+  </svg>`;
+}
+function ramSVG(color='#a78bfa') {
+  return `<svg width="110" height="80" viewBox="0 0 130 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+    ${[18,42,66,90].map(x=>`
+    <rect x="${x}" y="10" width="16" height="60" rx="2" fill="${color}" fill-opacity=".12" stroke="${color}" stroke-width="1.2"/>
+    <rect x="${x+2}" y="10" width="12" height="4" rx="1" fill="${color}" fill-opacity=".6"/>
+    ${[20,28,36,44,52].map(y=>`<rect x="${x+3}" y="${y}" width="10" height="2" rx="1" fill="${color}" fill-opacity=".25"/>`).join('')}
+    `).join('')}
+  </svg>`;
+}
+function fanSVG(color='#8b5cf6') {
+  return `<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="50" r="44" fill="${color}" fill-opacity=".06" stroke="${color}" stroke-width="1.5"/>
+    <circle cx="50" cy="50" r="32" fill="none" stroke="${color}" stroke-width="1" stroke-opacity=".5"/>
+    <circle cx="50" cy="50" r="6" fill="${color}" fill-opacity=".6"/>
+    ${[0,60,120,180,240,300].map(a=>{
+      const r=a*Math.PI/180, x1=50+12*Math.cos(r), y1=50+12*Math.sin(r), x2=50+36*Math.cos(r+0.6), y2=50+36*Math.sin(r+0.6);
+      return `<path d="M50 50 Q${x1} ${y1} ${x2} ${y2}" stroke="${color}" stroke-width="8" stroke-opacity=".18" fill="none" stroke-linecap="round"/>`;
+    }).join('')}
+  </svg>`;
+}
+function sysSVG(color='#8b5cf6') {
+  return `<svg width="130" height="160" viewBox="0 0 120 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="20" y="8" width="80" height="164" rx="6" fill="${color}" fill-opacity=".08" stroke="${color}" stroke-width="1.4"/>
+    <rect x="30" y="20" width="60" height="38" rx="3" fill="${color}" fill-opacity=".18"/>
+    <circle cx="60" cy="100" r="26" fill="none" stroke="${color}" stroke-width="1.4" stroke-opacity=".7"/>
+    <circle cx="60" cy="100" r="16" fill="none" stroke="${color}" stroke-width="1" stroke-opacity=".5"/>
+    <circle cx="60" cy="100" r="5" fill="${color}" fill-opacity=".6"/>
+    <rect x="30" y="148" width="60" height="8" rx="2" fill="${color}" fill-opacity=".3"/>
+    <rect x="30" y="162" width="28" height="6" rx="1" fill="${color}" fill-opacity=".5"/>
+    <rect x="20" y="8" width="80" height="3" rx="1" fill="${color}" fill-opacity=".6"/>
+  </svg>`;
+}
+
+function getProductSVG(p) {
+  if (p.cat==='gpu') return gpuSVG(p.brandKey==='amd'?'#ef4444':'#8b5cf6');
+  if (p.cat==='cpu') return cpuSVG('#7c3aed');
+  if (p.cat==='ram') return ramSVG('#a78bfa');
+  if (p.cat==='cooling') return fanSVG('#8b5cf6');
+  return gpuSVG();
+}
+
+/* ── RENDER SYSTEMS GRID ── */
+function renderSystems() {
+  const grid = document.getElementById('sys-grid');
+  grid.innerHTML = SYSTEMS.map(s => `
+    <div class="sys-card" onclick="showSystem(${s.id})">
+      <div class="sys-img" style="background:var(--card2)">
+        ${sysSVG()}
+        <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(124,58,237,.1),transparent 70%)"></div>
+      </div>
+      <div class="sys-info">
+        <div class="sys-tier">${s.tier}</div>
+        <div class="sys-name">${s.name}</div>
+        <div class="sys-specs">
+          <div class="sys-spec-row"><strong>CPU:</strong>${s.cpu}</div>
+          <div class="sys-spec-row"><strong>GPU:</strong>${s.gpu}</div>
+          <div class="sys-spec-row"><strong>RAM:</strong>${s.ram}</div>
+        </div>
+        <div class="sys-foot">
+          <div class="sys-price">$${s.price.toLocaleString('en-US',{minimumFractionDigits:2})}</div>
+          <button class="btn-add" onclick="event.stopPropagation();addToCart(${s.id},'system')">
+            ADD
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ── RENDER PRODUCTS GRID ── */
+function renderProducts() {
+  const grid = document.getElementById('prod-grid');
+  grid.innerHTML = PRODUCTS.map(p => `
+    <div class="prod-card" onclick="showProduct(${p.id})">
+      <div class="prod-img" style="background:var(--card2);padding:1.5rem">
+        ${getProductSVG(p)}
+        <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(124,58,237,.08),transparent 70%)"></div>
+      </div>
+      <div class="prod-stat">
+        <span class="stat-lbl">${p.statLabel}</span>
+        <span class="stat-val">${p.statVal}</span>
+      </div>
+      <div class="prod-info">
+        <div class="prod-brand">${p.brand} / ${p.type}</div>
+        <div class="prod-name">${p.name}</div>
+        <div class="prod-desc">${p.desc}</div>
+        <div class="prod-foot">
+          <div class="prod-price">$${p.price.toLocaleString('en-US',{minimumFractionDigits:2})}</div>
+          <button class="btn-add" onclick="event.stopPropagation();addToCart(${p.id},'product')">
+            ADD
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ── SHOW PRODUCT DETAIL ── */
+function showProduct(id) {
+  const p = PRODUCTS.find(x=>x.id===id);
+  if (!p) return;
+  const el = document.getElementById('detail-inner');
+  el.innerHTML = `
+    <button class="back-btn" onclick="goView('components')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      Back to Components
+    </button>
+    <div class="detail-grid">
+      <div class="detail-img" style="background:var(--card2);padding:3rem">
+        ${getProductSVG(p)}
+      </div>
+      <div>
+        <div class="detail-brand">${p.brand} / ${p.type}</div>
+        <h1 class="detail-name">${p.name}</h1>
+        <p class="detail-desc">${p.desc}</p>
+        <div class="detail-price">$${p.price.toLocaleString('en-US',{minimumFractionDigits:2})}</div>
+        <div class="detail-actions">
+          <button class="btn-add-lg" onclick="addToCart(${p.id},'product');goView('cart')">Add to Cart</button>
+          <button class="btn-wish" title="Wishlist">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+        </div>
+        <div class="specs-grid">
+          ${Object.entries(p.specs).map(([k,v])=>`
+            <div class="spec-item">
+              <div class="spec-lbl">${k}</div>
+              <div class="spec-val">${v}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+  `;
+  goView('detail');
+}
+
+/* ── SHOW SYSTEM DETAIL ── */
+function showSystem(id) {
+  const s = SYSTEMS.find(x=>x.id===id);
+  if (!s) return;
+  const el = document.getElementById('detail-inner');
+  el.innerHTML = `
+    <button class="back-btn" onclick="goView('home')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      Back to Systems
+    </button>
+    <div class="detail-grid">
+      <div class="detail-img" style="background:var(--card2);padding:3rem">
+        ${sysSVG('#a78bfa')}
+      </div>
+      <div>
+        <div class="detail-brand">${s.tier}</div>
+        <h1 class="detail-name">${s.name}</h1>
+        <p class="detail-desc">${s.desc}</p>
+        <div class="detail-price">$${s.price.toLocaleString('en-US',{minimumFractionDigits:2})}</div>
+        <div class="detail-actions">
+          <button class="btn-add-lg" onclick="addToCart(${s.id},'system');goView('cart')">Add to Cart</button>
+          <button class="btn-wish" title="Wishlist">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+        </div>
+        <div class="specs-grid">
+          ${Object.entries(s.specs).map(([k,v])=>`
+            <div class="spec-item">
+              <div class="spec-lbl">${k}</div>
+              <div class="spec-val">${v}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+  `;
+  goView('detail');
+}
+
+/* ── CART ── */
+function addToCart(id, type) {
+  const item = type==='product' ? PRODUCTS.find(x=>x.id===id) : SYSTEMS.find(x=>x.id===id);
+  if (!item) return;
+  const existing = cart.find(c=>c.id===id && c.type===type);
+  if (existing) { existing.qty++; }
+  else { cart.push({...item, type, qty:1}); }
+  updateBadge();
+  showToast(`${item.name.length>30?item.name.slice(0,30)+'…':item.name} added to cart`);
+}
+
+function removeFromCart(id, type) {
+  cart = cart.filter(c=>!(c.id===id && c.type===type));
+  updateBadge();
+  renderCart();
+}
+
+function changeQty(id, type, delta) {
+  const item = cart.find(c=>c.id===id && c.type===type);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) cart = cart.filter(c=>!(c.id===id && c.type===type));
+  updateBadge();
+  renderCart();
+}
+
+function updateBadge() {
+  const total = cart.reduce((s,c)=>s+c.qty, 0);
+  document.getElementById('cart-badge').textContent = total;
+  document.getElementById('cart-badge').style.display = total>0 ? 'flex' : 'none';
+}
+
+function renderCart() {
+  const el = document.getElementById('cart-items');
+  if (cart.length === 0) {
+    el.innerHTML = `
+      <div class="empty-cart">
+        <div class="empty-cart-icon">🛒</div>
+        <h3>Your requisition is empty</h3>
+        <p style="font-size:.82rem;color:var(--txt3);margin-top:.4rem">Add systems or components to initialize.</p>
+        <button class="btn-fill" style="margin-top:1.5rem" onclick="goView('components')">Browse Components</button>
+      </div>`;
+  } else {
+    el.innerHTML = cart.map(c => {
+      const imgFn = c.type==='system' ? sysSVG : getProductSVG;
+      const imgHTML = c.type==='system' ? sysSVG('#a78bfa') : getProductSVG(c);
+      const specs = c.type==='system'
+        ? `<div class="ci-spec"><strong>CPU:</strong>${c.cpu}<br><strong>GPU:</strong>${c.gpu}<br><strong>RAM:</strong>${c.ram}</div>`
+        : `<div class="ci-spec">${Object.entries(c.specs).slice(0,2).map(([k,v])=>`<strong>${k}:</strong>${v}`).join('<br>')}</div>`;
+      return `
+        <div class="cart-item">
+          <div class="ci-img">${imgHTML}</div>
+          <div>
+            <div class="ci-type">${c.type==='system'?'Pre-Configured System':'Component Upgrade'}</div>
+            <div class="ci-name">${c.name}</div>
+            ${specs}
+          </div>
+          <div class="ci-right">
+            <button class="ci-rm" onclick="removeFromCart(${c.id},'${c.type}')">✕</button>
+            <div class="ci-price">$${(c.price*c.qty).toLocaleString('en-US',{minimumFractionDigits:2})}</div>
+            <div class="ci-qty">
+              <button class="qty-btn" onclick="changeQty(${c.id},'${c.type}',-1)">−</button>
+              <span class="qty-n">${c.qty}</span>
+              <button class="qty-btn" onclick="changeQty(${c.id},'${c.type}',1)">+</button>
+            </div>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  const subtotal = cart.reduce((s,c)=>s+c.price*c.qty, 0);
+  const count = cart.reduce((s,c)=>s+c.qty, 0);
+  document.getElementById('cart-item-count').textContent = `Subtotal (${count} item${count!==1?'s':''})`;
+  document.getElementById('cart-subtotal').textContent = '$'+subtotal.toLocaleString('en-US',{minimumFractionDigits:2});
+  document.getElementById('cart-total').textContent = '$'+subtotal.toLocaleString('en-US',{minimumFractionDigits:2});
+}
+
+/* ── TOAST ── */
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toast-msg').textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(()=>t.classList.remove('show'), 2800);
+}
+
+/* ── MOBILE NAV ── */
+function toggleMobNav() {
+  document.getElementById('mob-nav').classList.toggle('open');
+}
+
+/* ── PRICE FILTER (visual only) ── */
+function setPriceFilter(key, btn) {
+  btn.classList.toggle('on');
+}
+
+/* ── INIT ── */
+updateBadge();
+renderSystems();
+document.getElementById('cart-badge').style.display = 'none';
+</script>
+</body>
+</html>
