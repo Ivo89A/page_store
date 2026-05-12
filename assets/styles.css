@@ -330,6 +330,19 @@ footer{background:var(--bg1);border-top:1px solid var(--bdr);padding:2.5rem 2rem
 .toast.show{transform:translateY(0);opacity:1}
 .toast-dot{width:7px;height:7px;border-radius:50%;background:var(--acc-light);flex-shrink:0}
 
+/* ── PERIPHERALS ── */
+.periph-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  padding: 0 2rem 4rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+@media(max-width:600px) {
+  .periph-grid { grid-template-columns: 1fr; padding: 0 1.25rem 3rem; gap: 1.2rem; }
+}
+
 /* ── CONTACT ── */
 .contact-view { padding: 7rem 2rem 4rem; max-width: 1200px; margin: 0 auto; }
 .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; margin-bottom: 4rem; }

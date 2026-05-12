@@ -1,9 +1,10 @@
 /* ── KINGS PC — Main App ── */
 
 const STORAGE_KEYS = {
-  products: 'kingspc_products',
-  systems:  'kingspc_systems',
-  content:  'kingspc_content'
+  products:    'kingspc_products',
+  systems:     'kingspc_systems',
+  content:     'kingspc_content',
+  peripherals: 'kingspc_peripherals'
 };
 
 /* ── DEFAULT DATA ── */
@@ -76,6 +77,51 @@ const DEFAULT_SYSTEMS = [
   }
 ];
 
+const DEFAULT_PERIPHERALS = [
+  {
+    id:100, brand:'LOGITECH', type:'Mouse', name:'G Pro X Superlight 2',
+    desc:'Ultra-liviano a 60g con sensor HERO 2 de 44K DPI. Diseñado para esports de elite.',
+    price:159.99, statLabel:'Peso', statVal:'60g',
+    cat:'mouse', brandKey:'logitech',
+    specs:{Sensor:'HERO 2', DPI:'44,000', Batería:'95 horas', Conexión:'LIGHTSPEED Wireless'}
+  },
+  {
+    id:101, brand:'CORSAIR', type:'Teclado', name:'K100 RGB Mechanical',
+    desc:'Teclado mecánico con switches CORSAIR OPX y rueda de control iCUE. Marco de aluminio anodizado.',
+    price:229.99, statLabel:'Switches', statVal:'OPX Optical',
+    cat:'keyboard', brandKey:'corsair',
+    specs:{Switches:'CORSAIR OPX', Layout:'Full-size', Iluminación:'RGB per-key', Polling:'8000Hz'}
+  },
+  {
+    id:102, brand:'STEELSERIES', type:'Auriculares', name:'Arctis Nova Pro Wireless',
+    desc:'Audio Hi-Res con drivers de neodimio premium y ANC activo. Base DAC con pantalla OLED.',
+    price:349.99, statLabel:'Drivers', statVal:'40mm',
+    cat:'headset', brandKey:'steelseries',
+    specs:{Drivers:'40mm Neodymium', ANC:'Active', Batería:'Dual 22h', Conexión:'2.4GHz + BT'}
+  },
+  {
+    id:103, brand:'RAZER', type:'Mousepad', name:'Firefly V2 Pro',
+    desc:'Superficie de microtextura optimizada para máximo control. RGB Chroma integrado con 19 zonas.',
+    price:99.99, statLabel:'Superficie', statVal:'Hard',
+    cat:'mousepad', brandKey:'razer',
+    specs:{Superficie:'Microtextura', Tamaño:'355 x 255mm', Iluminación:'Chroma RGB', Base:'Antideslizante'}
+  },
+  {
+    id:104, brand:'SAMSUNG', type:'Monitor', name:'Odyssey OLED G9 49"',
+    desc:'Monitor ultrawide curvo DQHD de 49 pulgadas con panel OLED. 240Hz y 0.03ms de respuesta.',
+    price:1799.99, statLabel:'Refresh', statVal:'240Hz',
+    cat:'monitor', brandKey:'samsung',
+    specs:{Panel:'OLED', Resolución:'5120x1440', Curvatura:'1800R', HDR:'HDR True Black 400'}
+  },
+  {
+    id:105, brand:'ELGATO', type:'Streaming', name:'Stream Deck MK.2',
+    desc:'15 teclas LCD personalizables para control total de tu streaming. Integración con OBS y más.',
+    price:149.99, statLabel:'Teclas', statVal:'15 LCD',
+    cat:'streaming', brandKey:'elgato',
+    specs:{Teclas:'15 LCD', Conexión:'USB-C', Compatible:'OBS/Twitch/YT', Perfil:'Intercambiable'}
+  }
+];
+
 const DEFAULT_CONTENT = {
   hero: {
     tag: 'Technological Sovereignty Secured',
@@ -88,7 +134,7 @@ const DEFAULT_CONTENT = {
   navLinks: [
     { label: 'Systems', view: 'home' },
     { label: 'Components', view: 'components' },
-    { label: 'Peripherals', view: 'home' },
+    { label: 'Periféricos', view: 'peripherals' },
     { label: 'Contacto', view: 'contact' }
   ],
   sectors: {
@@ -100,7 +146,8 @@ const DEFAULT_CONTENT = {
   footer: {
     links: ['Tech Support', 'RMA Portal', 'Overclocking Guide', 'Privacy', 'Terms'],
     copyright: '© 2024 KINGS PC. TECHNOLOGICAL SOVEREIGNTY SECURED.'
-  }
+  },
+  offerIds: []
 };
 
 /* ── LOAD FROM STORAGE ── */
@@ -108,30 +155,36 @@ function loadFromStorage() {
   try {
     const p = localStorage.getItem(STORAGE_KEYS.products);
     const s = localStorage.getItem(STORAGE_KEYS.systems);
+    const ph = localStorage.getItem(STORAGE_KEYS.peripherals);
     let c = localStorage.getItem(STORAGE_KEYS.content);
     
     let content = c ? JSON.parse(c) : JSON.parse(JSON.stringify(DEFAULT_CONTENT));
 
-    // Force update navigation to replace Support with Contacto
+    // Force fix stale nav links
+    let dirty = false;
     if (content.navLinks) {
-      const supportIdx = content.navLinks.findIndex(l => l.label === 'Support');
-      if (supportIdx !== -1) {
-        content.navLinks[supportIdx] = { label: 'Contacto', view: 'contact' };
-        localStorage.setItem(STORAGE_KEYS.content, JSON.stringify(content));
-      }
+      content.navLinks = content.navLinks.map(l => {
+        if (l.label === 'Support') { dirty = true; return { label: 'Contacto', view: 'contact' }; }
+        if (l.label === 'Peripherals' && l.view === 'home') { dirty = true; return { label: 'Periféricos', view: 'peripherals' }; }
+        return l;
+      });
+      if (dirty) localStorage.setItem(STORAGE_KEYS.content, JSON.stringify(content));
     }
+    // Ensure offerIds field exists
+    if (!content.offerIds) content.offerIds = [];
 
     return {
-      products: p ? JSON.parse(p) : DEFAULT_PRODUCTS,
-      systems:  s ? JSON.parse(s) : DEFAULT_SYSTEMS,
-      content:  content
+      products:    p  ? JSON.parse(p)  : DEFAULT_PRODUCTS,
+      systems:     s  ? JSON.parse(s)  : DEFAULT_SYSTEMS,
+      peripherals: ph ? JSON.parse(ph) : DEFAULT_PERIPHERALS,
+      content:     content
     };
   } catch {
-    return { products: DEFAULT_PRODUCTS, systems: DEFAULT_SYSTEMS, content: DEFAULT_CONTENT };
+    return { products: DEFAULT_PRODUCTS, systems: DEFAULT_SYSTEMS, peripherals: DEFAULT_PERIPHERALS, content: DEFAULT_CONTENT };
   }
 }
 
-const { products: PRODUCTS, systems: SYSTEMS, content: CONTENT } = loadFromStorage();
+const { products: PRODUCTS, systems: SYSTEMS, peripherals: PERIPHERALS, content: CONTENT } = loadFromStorage();
 
 /* ── CART STATE ── */
 let cart = [];
@@ -255,6 +308,7 @@ function goView(name) {
   });
 
   if (name === 'components') renderProducts();
+  if (name === 'peripherals') renderPeripherals();
   if (name === 'cart') renderCart();
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -405,8 +459,14 @@ function renderProducts() {
 function renderWeeklyOffers() {
   const grid = document.getElementById('offers-grid');
   if (!grid) return;
-  // Use a subset of products as "offers"
-  const offers = PRODUCTS.slice(0, 4);
+  const allItems = [...PRODUCTS, ...PERIPHERALS];
+  // Use admin-selected offers, or fall back to first 4 products
+  let offers;
+  if (CONTENT.offerIds && CONTENT.offerIds.length > 0) {
+    offers = CONTENT.offerIds.map(id => allItems.find(p => p.id === id)).filter(Boolean);
+  } else {
+    offers = PRODUCTS.slice(0, 4);
+  }
   grid.innerHTML = offers.map(p => `
     <div class="offer-card" onclick="showProduct(${p.id})">
       <div class="offer-badge">OFERTA</div>
@@ -427,15 +487,55 @@ function renderWeeklyOffers() {
   `).join('');
 }
 
+/* ── RENDER PERIPHERALS ── */
+function renderPeripherals() {
+  const grid = document.getElementById('periph-grid');
+  if (!grid) return;
+  grid.innerHTML = PERIPHERALS.map(p => `
+    <div class="prod-card" onclick="showProduct(${p.id})">
+      <div class="prod-img" style="background:var(--card2);padding:${p.image?'0':'1.5rem'}">
+        ${p.image ? `<img src="${p.image}" style="width:100%;height:100%;object-fit:cover;border-radius:4px">` : getProductSVG(p)}
+        <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(124,58,237,.08),transparent 70%)"></div>
+      </div>
+      <div class="prod-stat">
+        <span class="stat-lbl">${p.statLabel}</span>
+        <span class="stat-val">${p.statVal}</span>
+      </div>
+      <div class="prod-info">
+        <div class="prod-brand">${p.brand} / ${p.type}</div>
+        <div class="prod-name">${p.name}</div>
+        <div class="prod-desc">${p.desc}</div>
+        <div class="prod-foot">
+          <div class="prod-price-container">
+            <div class="prod-price-usd">$${p.price.toLocaleString('en-US', {minimumFractionDigits:2})}</div>
+            <div class="prod-price-ars">${formatARS(p.price)}</div>
+          </div>
+          <button class="btn-add" onclick="event.stopPropagation();addToCart(${p.id},'product')">
+            ADD
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
 /* ── PRODUCT DETAIL ── */
 function showProduct(id) {
-  const p = PRODUCTS.find(x => x.id === id);
+  let p = PRODUCTS.find(x => x.id === id);
+  let backView = 'components';
+  let backLabel = 'Back to Components';
+  if (!p) {
+    p = PERIPHERALS.find(x => x.id === id);
+    backView = 'peripherals';
+    backLabel = 'Volver a Periféricos';
+  }
   if (!p) return;
   const el = document.getElementById('detail-inner');
   el.innerHTML = `
-    <button class="back-btn" onclick="goView('components')">
+    <button class="back-btn" onclick="goView('${backView}')">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-      Back to Components
+      ${backLabel}
     </button>
     <div class="detail-grid">
       <div class="detail-img" style="background:var(--card2);padding:${p.image?'0':'3rem'}">

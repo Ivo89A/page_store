@@ -61,6 +61,13 @@
         </svg>
         Users
       </button>
+      <button class="nav-item" data-panel="offers" onclick="showPanel('offers')">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
+          <line x1="7" y1="7" x2="7.01" y2="7"/>
+        </svg>
+        Ofertas
+      </button>
     </nav>
     <div class="sidebar-footer">
       <a href="../index.html" class="back-to-site">
@@ -356,6 +363,27 @@
             </tr>
           </tbody>
         </table>
+      </div>
+    </div>
+
+    <!-- ══ OFFERS ══ -->
+    <div class="panel" id="panel-offers">
+      <div class="table-wrap">
+        <div class="table-header">
+          <span class="table-title">Seleccionar Ofertas Semanales</span>
+          <button class="btn-primary" onclick="saveOffers()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+              <polyline points="17 21 17 13 7 13 7 21"/>
+              <polyline points="7 3 7 8 15 8"/>
+            </svg>
+            Guardar Ofertas
+          </button>
+        </div>
+        <p style="font-size:.78rem;color:var(--txt3);margin-bottom:1.5rem">
+          Selecciona los productos que quieres mostrar como ofertas semanales en la tienda. Los productos marcados aparecerán en la sección "¡OFERTAS SEMANALES!".
+        </p>
+        <div id="offers-body"><!-- rendered by admin.js --></div>
       </div>
     </div>
 

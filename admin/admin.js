@@ -1,10 +1,11 @@
 /* ── KINGS PC ADMIN PANEL ── */
 
 const KEYS = {
-  products: 'kingspc_products',
-  systems:  'kingspc_systems',
-  content:  'kingspc_content',
-  users:    'kingspc_users'
+  products:    'kingspc_products',
+  systems:     'kingspc_systems',
+  content:     'kingspc_content',
+  users:       'kingspc_users',
+  peripherals: 'kingspc_peripherals'
 };
 
 const DEFAULT_PRODUCTS = [
@@ -88,7 +89,7 @@ const DEFAULT_CONTENT = {
   navLinks: [
     { label: 'Systems', view: 'home' },
     { label: 'Components', view: 'components' },
-    { label: 'Peripherals', view: 'home' },
+    { label: 'Periféricos', view: 'peripherals' },
     { label: 'Contacto', view: 'contact' }
   ],
   sectors: {
@@ -105,7 +106,8 @@ const DEFAULT_CONTENT = {
     enabled: true,
     text: 'HOT SALE FINALIZA EN',
     deadline: '2024-12-31T23:59:59'
-  }
+  },
+  offerIds: []
 };
 
 const DEFAULT_USERS = [
@@ -150,7 +152,8 @@ const PANEL_TITLES = {
   products:  'Products',
   systems:   'Pre-Built Systems',
   content:   'Sections & Content',
-  users:     'User Management'
+  users:     'User Management',
+  offers:    'Ofertas Semanales'
 };
 
 function showPanel(name) {
@@ -165,6 +168,7 @@ function showPanel(name) {
   if (name === 'systems')   renderSystemsTable();
   if (name === 'content')   renderContentForms();
   if (name === 'users')     renderUsersTable();
+  if (name === 'offers')    renderOffersPanel();
 }
 
 /* ── DASHBOARD ── */
@@ -742,6 +746,70 @@ function toast(msg, type = 'success') {
 document.getElementById('modal-overlay').addEventListener('click', e => {
   if (e.target === e.currentTarget) closeModal();
 });
+
+/* ── OFFERS MANAGEMENT ── */
+function getPeripherals() {
+  try {
+    const ph = localStorage.getItem(KEYS.peripherals);
+    return ph ? JSON.parse(ph) : [];
+  } catch { return []; }
+}
+
+function renderOffersPanel() {
+  const panel = document.getElementById('offers-body');
+  if (!panel) return;
+  const selectedIds = state.content.offerIds || [];
+  const allProducts = state.products || [];
+  const peripherals = getPeripherals();
+
+  const renderItem = (item, source) => {
+    const checked = selectedIds.includes(item.id) ? 'checked' : '';
+    return `
+      <label class="offer-select-card ${checked ? 'selected' : ''}">
+        <input type="checkbox" class="offer-check" value="${item.id}" ${checked}
+               onchange="toggleOfferCard(this)">
+        <div class="offer-card-inner">
+          <div class="offer-card-thumb">
+            ${item.image ? `<img src="${item.image}">` : `<div class="offer-thumb-placeholder">${esc(item.type?.[0] || '?')}</div>`}
+          </div>
+          <div class="offer-card-details">
+            <div class="offer-card-name">${esc(item.name)}</div>
+            <div class="offer-card-meta">${esc(item.brand)} · $${item.price.toFixed(2)}</div>
+            <div class="offer-card-source">${source}</div>
+          </div>
+        </div>
+      </label>`;
+  };
+
+  let html = '<div class="offer-cards-grid">';
+  if (allProducts.length) {
+    html += `<div class="offer-section-label">Componentes</div>`;
+    html += allProducts.map(p => renderItem(p, 'Componente')).join('');
+  }
+  if (peripherals.length) {
+    html += `<div class="offer-section-label">Periféricos</div>`;
+    html += peripherals.map(p => renderItem(p, 'Periférico')).join('');
+  }
+  html += '</div>';
+
+  panel.innerHTML = html;
+}
+
+function toggleOfferCard(checkbox) {
+  const card = checkbox.closest('.offer-select-card');
+  if (checkbox.checked) card.classList.add('selected');
+  else card.classList.remove('selected');
+}
+
+function saveOffers() {
+  const checks = document.querySelectorAll('#offers-body .offer-check:checked');
+  const ids = Array.from(checks).map(c => parseInt(c.value));
+  if (!state.content.offerIds) state.content.offerIds = [];
+  state.content.offerIds = ids;
+  persistState();
+  toast(`${ids.length} producto(s) marcados como oferta semanal`);
+}
+
 
 /* ── INIT ── */
 loadState();

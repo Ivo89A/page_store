@@ -59,10 +59,6 @@
   <span class="ticker-updated" id="ticker-updated"></span>
 </div>
 
-    </div>
-  </div>
-</section>
-
 <!-- ── AUTH MODAL ── -->
 <div class="auth-overlay" id="auth-overlay">
   <div class="auth-modal">
@@ -223,7 +219,7 @@
     </div>
 
     <!-- Peripherals full-width card -->
-    <div class="sector-card" style="margin-top:1rem;height:130px;" onclick="goView('home')">
+    <div class="sector-card" style="margin-top:1rem;height:130px;" onclick="goView('peripherals')">
       <div class="sector-bg bg-periph"></div>
       <div class="sector-grid-lines"></div>
       <div class="sector-glow"></div>
@@ -327,6 +323,16 @@
     </div>
   </div>
 </section>
+
+<!-- ══════════════════════════════ PERIPHERALS VIEW ══════════════════════════════ -->
+<section class="view" id="v-peripherals">
+  <div class="page-top">
+    <h1>Periféricos Tácticos</h1>
+    <p class="sec-sub">Equipo de combate para tu setup</p>
+  </div>
+  <div class="periph-grid" id="periph-grid"><!-- rendered by app.js --></div>
+</section>
+
 
 <!-- ══════════════════════════════ CONTACT VIEW ══════════════════════════════ -->
 <section class="view" id="v-contact">
