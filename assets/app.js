@@ -387,6 +387,32 @@ function renderProducts() {
   `).join('');
 }
 
+/* ── RENDER WEEKLY OFFERS ── */
+function renderWeeklyOffers() {
+  const grid = document.getElementById('offers-grid');
+  if (!grid) return;
+  // Use a subset of products as "offers"
+  const offers = PRODUCTS.slice(0, 4);
+  grid.innerHTML = offers.map(p => `
+    <div class="offer-card" onclick="showProduct(${p.id})">
+      <div class="offer-badge">OFERTA</div>
+      <div class="offer-img">
+        ${p.image ? `<img src="${p.image}">` : getProductSVG(p)}
+      </div>
+      <div class="offer-info">
+        <div class="offer-name">${p.name}</div>
+        <div class="offer-price">
+          <div class="op-usd">$${p.price.toLocaleString('en-US', {minimumFractionDigits:2})}</div>
+          <div class="op-ars">${formatARS(p.price)}</div>
+        </div>
+        <button class="btn-add-offer" onclick="event.stopPropagation();addToCart(${p.id},'product')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+      </div>
+    </div>
+  `).join('');
+}
+
 /* ── PRODUCT DETAIL ── */
 function showProduct(id) {
   const p = PRODUCTS.find(x => x.id === id);
