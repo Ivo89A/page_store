@@ -59,6 +59,63 @@
   <span class="ticker-updated" id="ticker-updated"></span>
 </div>
 
+    </div>
+  </div>
+</section>
+
+<!-- ── AUTH MODAL ── -->
+<div class="auth-overlay" id="auth-overlay">
+  <div class="auth-modal">
+    <button class="auth-close" onclick="toggleAuthModal()">✕</button>
+    
+    <div id="auth-logged-in" style="display:none">
+      <div class="auth-profile">
+        <div class="profile-avatar" id="p-avatar"></div>
+        <h2 id="p-name">Username</h2>
+        <p id="p-email">user@example.com</p>
+        <div class="profile-actions">
+          <button class="btn-fill" onclick="logout()">Terminate Session</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="auth-logged-out">
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tab-login" onclick="setAuthTab('login')">Login</button>
+        <button class="auth-tab" id="tab-signup" onclick="setAuthTab('signup')">Register</button>
+      </div>
+
+      <div class="auth-form active" id="form-login">
+        <div class="a-field">
+          <label>Email Address</label>
+          <input type="email" id="l-email" placeholder="name@domain.com">
+        </div>
+        <div class="a-field">
+          <label>Password</label>
+          <input type="password" id="l-pass" placeholder="••••••••">
+        </div>
+        <button class="btn-auth" onclick="login()">Access System</button>
+      </div>
+
+      <div class="auth-form" id="form-signup">
+        <div class="a-field">
+          <label>Full Name</label>
+          <input type="text" id="s-name" placeholder="John Doe">
+        </div>
+        <div class="a-field">
+          <label>Email Address</label>
+          <input type="email" id="s-email" placeholder="name@domain.com">
+        </div>
+        <div class="a-field">
+          <label>Password</label>
+          <input type="password" id="s-pass" placeholder="••••••••">
+        </div>
+        <button class="btn-auth" onclick="signup()">Initialize Registration</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ── MOBILE NAV ── -->
 <div class="mob-nav" id="mob-nav">
   <button class="mob-close" onclick="toggleMobNav()">✕</button>
@@ -271,6 +328,78 @@
   </div>
 </section>
 
+<!-- ══════════════════════════════ CONTACT VIEW ══════════════════════════════ -->
+<section class="view" id="v-contact">
+  <div class="contact-view">
+    <div class="sec-hdr">
+      <h2>CONEXIÓN ESTABLECIDA</h2>
+      <p class="sec-sub">Direct Channel to Kings PC Command</p>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="info-block">
+          <div class="info-lbl">UBICACIÓN HQ</div>
+          <div class="info-val">Entre Ríos sur 181 Capital, San Juan</div>
+        </div>
+        <div class="info-block">
+          <div class="info-lbl">DIRECT WHATSAPP</div>
+          <div class="info-val acc-txt">+54 9 11 7829 8456</div>
+        </div>
+        <div class="info-block">
+          <div class="info-lbl">SERVICIO TÉCNICO</div>
+          <div class="info-val acc-txt">+54 9 264 519 1474</div>
+        </div>
+        <div class="info-block">
+          <div class="info-lbl">EMAIL DE ENLACE</div>
+          <div class="info-val">ventas@tecnobytestore.com.ar</div>
+        </div>
+        <div class="info-block">
+          <div class="info-lbl">HORARIO DE OPERACIÓN</div>
+          <div class="info-val">Lunes a Viernes: 9 a 13hs / 17 a 21hs<br>Sábados: 9 a 14hs</div>
+        </div>
+      </div>
+
+      <div class="contact-map">
+        <iframe 
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3400.123456789!2d-68.526!3d-31.537!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzHCsDMyJzEzLjAiUyA2OMKwMzEnMzMuNiJX!5e0!3m2!1sen!2sar!4v1234567890" 
+          width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
+        </iframe>
+      </div>
+    </div>
+
+    <div class="contact-form-wrap">
+      <div class="form-row">
+        <div class="a-field">
+          <label>Nombre Completo</label>
+          <input type="text" placeholder="Designación del remitente">
+        </div>
+        <div class="a-field">
+          <label>Teléfono</label>
+          <input type="text" placeholder="+54 000 0000000">
+        </div>
+      </div>
+      <div class="a-field">
+        <label>Mensaje / Requerimiento</label>
+        <textarea rows="6" placeholder="Escriba su mensaje aquí..."></textarea>
+      </div>
+      <div class="form-row">
+        <div class="a-field">
+          <label>Email de Respuesta</label>
+          <input type="email" placeholder="nombre@dominio.com">
+        </div>
+        <div class="a-field">
+          <label>Verificación del Sistema</label>
+          <div class="captcha-placeholder">CAPTCHA_VALIDATION_REQUIRED</div>
+        </div>
+      </div>
+      <button class="btn-fill btn-send" onclick="showToast('Mensaje enviado al centro de comando.')">
+        ENVIAR TRANSMISIÓN →
+      </button>
+    </div>
+  </div>
+</section>
+
 <!-- ── AUTH MODAL ── -->
 <div class="auth-overlay" id="auth-overlay">
   <div class="auth-modal">
@@ -322,6 +451,12 @@
       </div>
     </div>
   </div>
+</div>
+
+<!-- ── MOBILE NAV ── -->
+<div class="mob-nav" id="mob-nav">
+  <button class="mob-close" onclick="toggleMobNav()">✕</button>
+  <div id="mob-nav-links"><!-- rendered by app.js --></div>
 </div>
 
 <!-- ── FOOTER ── -->
