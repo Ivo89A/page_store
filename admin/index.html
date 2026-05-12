@@ -1,339 +1,386 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KINGS PC — Admin Panel</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="admin.css">
 </head>
+
 <body>
 
-<!-- ── SIDEBAR ── -->
-<aside class="sidebar">
-  <div class="sidebar-logo">
-    <span class="sidebar-logo-name">Kings PC</span>
-    <span class="sidebar-badge">Admin Panel</span>
-  </div>
-  <nav class="sidebar-nav">
-    <button class="nav-item active" data-panel="dashboard" onclick="showPanel('dashboard')">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-      Dashboard
-    </button>
-    <button class="nav-item" data-panel="products" onclick="showPanel('products')">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-      Products
-    </button>
-    <button class="nav-item" data-panel="systems" onclick="showPanel('systems')">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
-      Pre-Built Systems
-    </button>
-    <button class="nav-item" data-panel="content" onclick="showPanel('content')">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-      Sections & Content
-    </button>
-    <button class="nav-item" data-panel="users" onclick="showPanel('users')">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><circle cx="19" cy="11" r="4"/></svg>
-      Users
-    </button>
-  </nav>
-  <div class="sidebar-footer">
-    <a href="../kings-pc.html" class="back-to-site">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-      View Site
-    </a>
-  </div>
-</aside>
-
-<!-- ── MAIN CONTENT ── -->
-<main class="admin-main">
-  <header class="admin-header">
-    <h1 class="admin-title" id="panel-title">Dashboard</h1>
-    <div style="display:flex;gap:.6rem;align-items:center">
-      <span id="header-action"></span>
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <span class="sidebar-logo-name">Kings PC</span>
+      <span class="sidebar-badge">Admin Panel</span>
     </div>
-  </header>
-
-  <!-- ══ DASHBOARD ══ -->
-  <div class="panel active" id="panel-dashboard">
-    <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-card-label">Total Products</div>
-        <div class="stat-card-value" id="stat-products">—</div>
-        <div class="stat-card-sub">Components catalog</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-card-label">Pre-Built Systems</div>
-        <div class="stat-card-value" id="stat-systems">—</div>
-        <div class="stat-card-sub">Ready to deploy</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-card-label">Catalog Value</div>
-        <div class="stat-card-value" style="font-size:1.6rem" id="stat-catalog-value">—</div>
-        <div class="stat-card-sub">Combined price total</div>
-      </div>
+    <nav class="sidebar-nav">
+      <button class="nav-item active" data-panel="dashboard" onclick="showPanel('dashboard')">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7" />
+          <rect x="14" y="3" width="7" height="7" />
+          <rect x="14" y="14" width="7" height="7" />
+          <rect x="3" y="14" width="7" height="7" />
+        </svg>
+        Dashboard
+      </button>
+      <button class="nav-item" data-panel="products" onclick="showPanel('products')">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="6" width="20" height="12" rx="2" />
+          <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+        </svg>
+        Products
+      </button>
+      <button class="nav-item" data-panel="systems" onclick="showPanel('systems')">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="4" y="2" width="16" height="20" rx="2" />
+          <line x1="9" y1="7" x2="15" y2="7" />
+          <line x1="9" y1="12" x2="15" y2="12" />
+          <line x1="9" y1="17" x2="13" y2="17" />
+        </svg>
+        Pre-Built Systems
+      </button>
+      <button class="nav-item" data-panel="content" onclick="showPanel('content')">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 20h9" />
+          <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+        </svg>
+        Sections & Content
+      </button>
+      <button class="nav-item" data-panel="users" onclick="showPanel('users')">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+          <circle cx="9" cy="7" r="4" />
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+          <circle cx="19" cy="11" r="4" />
+        </svg>
+        Users
+      </button>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../index.html" class="back-to-site">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="19" y1="12" x2="5" y2="12" />
+          <polyline points="12 19 5 12 12 5" />
+        </svg>
+        View Site
+      </a>
     </div>
+  </aside>
 
-    <div class="table-wrap">
-      <div class="table-header">
-        <span class="table-title">Catalog Overview</span>
-        <div style="display:flex;gap:.5rem">
-          <button class="btn-sm" onclick="showPanel('products')">Manage Products</button>
-          <button class="btn-sm" onclick="showPanel('systems')">Manage Systems</button>
+  <!-- ── MAIN CONTENT ── -->
+  <main class="admin-main">
+    <header class="admin-header">
+      <h1 class="admin-title" id="panel-title">Dashboard</h1>
+      <div style="display:flex;gap:.6rem;align-items:center">
+        <span id="header-action"></span>
+      </div>
+    </header>
+
+    <!-- ══ DASHBOARD ══ -->
+    <div class="panel active" id="panel-dashboard">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-card-label">Total Products</div>
+          <div class="stat-card-value" id="stat-products">—</div>
+          <div class="stat-card-sub">Components catalog</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">Pre-Built Systems</div>
+          <div class="stat-card-value" id="stat-systems">—</div>
+          <div class="stat-card-sub">Ready to deploy</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">Catalog Value</div>
+          <div class="stat-card-value" style="font-size:1.6rem" id="stat-catalog-value">—</div>
+          <div class="stat-card-sub">Combined price total</div>
         </div>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Type</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody id="recent-items">
-          <tr><td colspan="4" style="text-align:center;color:var(--txt3);padding:2rem">Loading...</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
 
-  <!-- ══ PRODUCTS ══ -->
-  <div class="panel" id="panel-products">
-    <div class="table-wrap">
-      <div class="table-header">
-        <span class="table-title">Components Catalog</span>
-        <button class="btn-primary" onclick="openProductModal(null)">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          Add Product
-        </button>
-      </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Type</th>
-            <th>Name</th>
-            <th>Brand</th>
-            <th>Category</th>
-            <th>Price</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="products-tbody">
-          <tr><td colspan="6" style="text-align:center;color:var(--txt3);padding:2rem">Loading...</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- ══ SYSTEMS ══ -->
-  <div class="panel" id="panel-systems">
-    <div class="table-wrap">
-      <div class="table-header">
-        <span class="table-title">Pre-Built Systems</span>
-        <button class="btn-primary" onclick="openSystemModal(null)">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          Add System
-        </button>
-      </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Tier</th>
-            <th>Name</th>
-            <th>CPU</th>
-            <th>GPU</th>
-            <th>Price</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="systems-tbody">
-          <tr><td colspan="6" style="text-align:center;color:var(--txt3);padding:2rem">Loading...</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- ══ SECTIONS & CONTENT ══ -->
-  <div class="panel" id="panel-content">
-    <div style="display:flex;justify-content:flex-end;margin-bottom:1.4rem">
-      <button class="btn-save" onclick="saveContent()">Save All Changes</button>
-    </div>
-    <div class="sections-grid">
-      
-      <!-- Promotional Banner -->
-      <div class="section-block" style="border-color:var(--acc)">
-        <div class="section-block-hdr" style="background:var(--acc-glow)">
-          <span class="section-block-title" style="color:var(--acc-light)">Promotional Banner (Hot Sale)</span>
-          <label style="display:flex;align-items:center;gap:.5rem;font-size:.65rem;cursor:pointer">
-            <input type="checkbox" id="f-promo-enabled"> Enable Banner
-          </label>
+      <div class="table-wrap">
+        <div class="table-header">
+          <span class="table-title">Catalog Overview</span>
+          <div style="display:flex;gap:.5rem">
+            <button class="btn-sm" onclick="showPanel('products')">Manage Products</button>
+            <button class="btn-sm" onclick="showPanel('systems')">Manage Systems</button>
+          </div>
         </div>
-        <div class="section-block-body">
-          <div class="form-grid">
-            <div class="form-group">
-              <label>Banner Text</label>
-              <input type="text" id="f-promo-text" placeholder="e.g. HOT SALE FINALIZA EN">
-            </div>
-            <div class="form-group">
-              <label>Deadline (ISO format)</label>
-              <input type="text" id="f-promo-deadline" placeholder="2024-12-31T23:59:59">
+        <table>
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="recent-items">
+            <tr>
+              <td colspan="4" style="text-align:center;color:var(--txt3);padding:2rem">Loading...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══ PRODUCTS ══ -->
+    <div class="panel" id="panel-products">
+      <div class="table-wrap">
+        <div class="table-header">
+          <span class="table-title">Components Catalog</span>
+          <button class="btn-primary" onclick="openProductModal(null)">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+            Add Product
+          </button>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Name</th>
+              <th>Brand</th>
+              <th>Category</th>
+              <th>Price</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="products-tbody">
+            <tr>
+              <td colspan="6" style="text-align:center;color:var(--txt3);padding:2rem">Loading...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══ SYSTEMS ══ -->
+    <div class="panel" id="panel-systems">
+      <div class="table-wrap">
+        <div class="table-header">
+          <span class="table-title">Pre-Built Systems</span>
+          <button class="btn-primary" onclick="openSystemModal(null)">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+            Add System
+          </button>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Tier</th>
+              <th>Name</th>
+              <th>CPU</th>
+              <th>GPU</th>
+              <th>Price</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="systems-tbody">
+            <tr>
+              <td colspan="6" style="text-align:center;color:var(--txt3);padding:2rem">Loading...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══ SECTIONS & CONTENT ══ -->
+    <div class="panel" id="panel-content">
+      <div style="display:flex;justify-content:flex-end;margin-bottom:1.4rem">
+        <button class="btn-save" onclick="saveContent()">Save All Changes</button>
+      </div>
+      <div class="sections-grid">
+
+        <!-- Promotional Banner -->
+        <div class="section-block" style="border-color:var(--acc)">
+          <div class="section-block-hdr" style="background:var(--acc-glow)">
+            <span class="section-block-title" style="color:var(--acc-light)">Promotional Banner (Hot Sale)</span>
+            <label style="display:flex;align-items:center;gap:.5rem;font-size:.65rem;cursor:pointer">
+              <input type="checkbox" id="f-promo-enabled"> Enable Banner
+            </label>
+          </div>
+          <div class="section-block-body">
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Banner Text</label>
+                <input type="text" id="f-promo-text" placeholder="e.g. HOT SALE FINALIZA EN">
+              </div>
+              <div class="form-group">
+                <label>Deadline (ISO format)</label>
+                <input type="text" id="f-promo-deadline" placeholder="2024-12-31T23:59:59">
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Hero Section -->
-      <div class="section-block">
-        <div class="section-block-hdr">
-          <span class="section-block-title">Hero Section</span>
-        </div>
-        <div class="section-block-body">
-          <div class="form-grid">
-            <div class="form-group full">
-              <label>Tag Line</label>
-              <input type="text" id="f-hero-tag" placeholder="Technological Sovereignty Secured">
-            </div>
-            <div class="form-group">
-              <label>Title — First Line</label>
-              <input type="text" id="f-hero-line1" placeholder="Build Your">
-            </div>
-            <div class="form-group">
-              <label>Title — Accent Word</label>
-              <input type="text" id="f-hero-accent" placeholder="Throne">
-            </div>
-            <div class="form-group full">
-              <label>Description</label>
-              <textarea id="f-hero-desc" rows="3"></textarea>
-            </div>
-            <div class="form-group">
-              <label>Primary Button Label</label>
-              <input type="text" id="f-hero-btn1" placeholder="Configure Now">
-            </div>
-            <div class="form-group">
-              <label>Secondary Button Label</label>
-              <input type="text" id="f-hero-btn2" placeholder="View Pre-Builts">
+        <!-- Hero Section -->
+        <div class="section-block">
+          <div class="section-block-hdr">
+            <span class="section-block-title">Hero Section</span>
+          </div>
+          <div class="section-block-body">
+            <div class="form-grid">
+              <div class="form-group full">
+                <label>Tag Line</label>
+                <input type="text" id="f-hero-tag" placeholder="Technological Sovereignty Secured">
+              </div>
+              <div class="form-group">
+                <label>Title — First Line</label>
+                <input type="text" id="f-hero-line1" placeholder="Build Your">
+              </div>
+              <div class="form-group">
+                <label>Title — Accent Word</label>
+                <input type="text" id="f-hero-accent" placeholder="Throne">
+              </div>
+              <div class="form-group full">
+                <label>Description</label>
+                <textarea id="f-hero-desc" rows="3"></textarea>
+              </div>
+              <div class="form-group">
+                <label>Primary Button Label</label>
+                <input type="text" id="f-hero-btn1" placeholder="Configure Now">
+              </div>
+              <div class="form-group">
+                <label>Secondary Button Label</label>
+                <input type="text" id="f-hero-btn2" placeholder="View Pre-Builts">
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Navigation Links -->
-      <div class="section-block">
-        <div class="section-block-hdr">
-          <span class="section-block-title">Navigation Links</span>
-          <button class="btn-sm" onclick="addNavLink()">+ Add Link</button>
+        <!-- Navigation Links -->
+        <div class="section-block">
+          <div class="section-block-hdr">
+            <span class="section-block-title">Navigation Links</span>
+            <button class="btn-sm" onclick="addNavLink()">+ Add Link</button>
+          </div>
+          <div class="section-block-body">
+            <div id="nav-links-editor" style="display:flex;flex-direction:column;gap:.5rem"></div>
+          </div>
         </div>
-        <div class="section-block-body">
-          <div id="nav-links-editor" style="display:flex;flex-direction:column;gap:.5rem"></div>
-        </div>
-      </div>
 
-      <!-- Hardware Sectors -->
-      <div class="section-block">
-        <div class="section-block-hdr">
-          <span class="section-block-title">Hardware Sector Cards</span>
-        </div>
-        <div class="section-block-body">
-          <div class="form-grid">
-            <div class="form-group">
-              <label>Custom Systems — Name</label>
-              <input type="text" id="f-sector-custom-name">
-            </div>
-            <div class="form-group">
-              <label>Custom Systems — Description</label>
-              <input type="text" id="f-sector-custom-desc">
-            </div>
-            <div class="form-group">
-              <label>Graphics Processing — Name</label>
-              <input type="text" id="f-sector-gpu-name">
-            </div>
-            <div class="form-group">
-              <label>Compute Units — Name</label>
-              <input type="text" id="f-sector-cpu-name">
-            </div>
-            <div class="form-group">
-              <label>Peripherals — Name</label>
-              <input type="text" id="f-sector-periph-name">
-            </div>
-            <div class="form-group">
-              <label>Peripherals — CTA Text</label>
-              <input type="text" id="f-sector-periph-cta">
+        <!-- Hardware Sectors -->
+        <div class="section-block">
+          <div class="section-block-hdr">
+            <span class="section-block-title">Hardware Sector Cards</span>
+          </div>
+          <div class="section-block-body">
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Custom Systems — Name</label>
+                <input type="text" id="f-sector-custom-name">
+              </div>
+              <div class="form-group">
+                <label>Custom Systems — Description</label>
+                <input type="text" id="f-sector-custom-desc">
+              </div>
+              <div class="form-group">
+                <label>Graphics Processing — Name</label>
+                <input type="text" id="f-sector-gpu-name">
+              </div>
+              <div class="form-group">
+                <label>Compute Units — Name</label>
+                <input type="text" id="f-sector-cpu-name">
+              </div>
+              <div class="form-group">
+                <label>Peripherals — Name</label>
+                <input type="text" id="f-sector-periph-name">
+              </div>
+              <div class="form-group">
+                <label>Peripherals — CTA Text</label>
+                <input type="text" id="f-sector-periph-cta">
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Footer -->
-      <div class="section-block">
-        <div class="section-block-hdr">
-          <span class="section-block-title">Footer</span>
-          <button class="btn-sm" onclick="addFooterLink()">+ Add Link</button>
-        </div>
-        <div class="section-block-body">
-          <div style="margin-bottom:1rem">
-            <div style="font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--txt3);margin-bottom:.6rem;font-weight:600">Footer Links</div>
-            <div id="footer-links-editor" style="display:flex;flex-direction:column;gap:.45rem"></div>
+        <!-- Footer -->
+        <div class="section-block">
+          <div class="section-block-hdr">
+            <span class="section-block-title">Footer</span>
+            <button class="btn-sm" onclick="addFooterLink()">+ Add Link</button>
           </div>
-          <div class="form-group">
-            <label>Copyright Text</label>
-            <input type="text" id="f-footer-copyright">
+          <div class="section-block-body">
+            <div style="margin-bottom:1rem">
+              <div
+                style="font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--txt3);margin-bottom:.6rem;font-weight:600">
+                Footer Links</div>
+              <div id="footer-links-editor" style="display:flex;flex-direction:column;gap:.45rem"></div>
+            </div>
+            <div class="form-group">
+              <label>Copyright Text</label>
+              <input type="text" id="f-footer-copyright">
+            </div>
           </div>
         </div>
-      </div>
 
+      </div>
+    </div>
+
+    <!-- ══ USERS ══ -->
+    <div class="panel" id="panel-users">
+      <div class="table-wrap">
+        <div class="table-header">
+          <span class="table-title">Registered Persons</span>
+          <button class="btn-primary" onclick="openUserModal(null)">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+            Add Person
+          </button>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="users-tbody">
+            <tr>
+              <td colspan="5" style="text-align:center;color:var(--txt3);padding:2rem">Loading...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ── MODAL ── -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal">
+      <h2 class="modal-title" id="modal-title">Add Product</h2>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div id="modal-form"></div>
+      <div class="modal-actions">
+        <button class="btn-ghost-sm" onclick="closeModal()">Cancel</button>
+        <button class="btn-save" onclick="saveModal()">Save</button>
+      </div>
     </div>
   </div>
 
-  <!-- ══ USERS ══ -->
-  <div class="panel" id="panel-users">
-    <div class="table-wrap">
-      <div class="table-header">
-        <span class="table-title">Registered Persons</span>
-        <button class="btn-primary" onclick="openUserModal(null)">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          Add Person
-        </button>
-      </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="users-tbody">
-          <tr><td colspan="5" style="text-align:center;color:var(--txt3);padding:2rem">Loading...</td></tr>
-        </tbody>
-      </table>
-    </div>
+  <!-- ── TOAST ── -->
+  <div class="admin-toast" id="admin-toast">
+    <div class="toast-dot success" id="toast-dot"></div>
+    <span id="admin-toast-msg"></span>
   </div>
 
-</main>
-
-<!-- ── MODAL ── -->
-<div class="modal-overlay" id="modal-overlay">
-  <div class="modal">
-    <h2 class="modal-title" id="modal-title">Add Product</h2>
-    <button class="modal-close" onclick="closeModal()">✕</button>
-    <div id="modal-form"></div>
-    <div class="modal-actions">
-      <button class="btn-ghost-sm" onclick="closeModal()">Cancel</button>
-      <button class="btn-save" onclick="saveModal()">Save</button>
-    </div>
-  </div>
-</div>
-
-<!-- ── TOAST ── -->
-<div class="admin-toast" id="admin-toast">
-  <div class="toast-dot success" id="toast-dot"></div>
-  <span id="admin-toast-msg"></span>
-</div>
-
-<script src="admin.js"></script>
+  <script src="admin.js"></script>
 </body>
+
 </html>
