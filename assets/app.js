@@ -108,11 +108,23 @@ function loadFromStorage() {
   try {
     const p = localStorage.getItem(STORAGE_KEYS.products);
     const s = localStorage.getItem(STORAGE_KEYS.systems);
-    const c = localStorage.getItem(STORAGE_KEYS.content);
+    let c = localStorage.getItem(STORAGE_KEYS.content);
+    
+    let content = c ? JSON.parse(c) : JSON.parse(JSON.stringify(DEFAULT_CONTENT));
+
+    // Force update navigation to replace Support with Contacto
+    if (content.navLinks) {
+      const supportIdx = content.navLinks.findIndex(l => l.label === 'Support');
+      if (supportIdx !== -1) {
+        content.navLinks[supportIdx] = { label: 'Contacto', view: 'contact' };
+        localStorage.setItem(STORAGE_KEYS.content, JSON.stringify(content));
+      }
+    }
+
     return {
       products: p ? JSON.parse(p) : DEFAULT_PRODUCTS,
       systems:  s ? JSON.parse(s) : DEFAULT_SYSTEMS,
-      content:  c ? JSON.parse(c) : DEFAULT_CONTENT
+      content:  content
     };
   } catch {
     return { products: DEFAULT_PRODUCTS, systems: DEFAULT_SYSTEMS, content: DEFAULT_CONTENT };
@@ -235,10 +247,12 @@ function goView(name) {
   if (el) el.classList.add('active');
   currentView = name;
 
-  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
-  const navLinks = document.querySelectorAll('.nav-links a');
-  if (name === 'home' && navLinks[0]) navLinks[0].classList.add('active');
-  if (name === 'components' && navLinks[1]) navLinks[1].classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.classList.remove('active');
+    if (a.getAttribute('onclick')?.includes(`goView('${name}')`)) {
+      a.classList.add('active');
+    }
+  });
 
   if (name === 'components') renderProducts();
   if (name === 'cart') renderCart();

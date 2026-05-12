@@ -89,7 +89,7 @@ const DEFAULT_CONTENT = {
     { label: 'Systems', view: 'home' },
     { label: 'Components', view: 'components' },
     { label: 'Peripherals', view: 'home' },
-    { label: 'Support', view: 'home' }
+    { label: 'Contacto', view: 'contact' }
   ],
   sectors: {
     custom: { name: 'Custom Systems', desc: 'Full-tower mastery. Liquid dominance.' },
